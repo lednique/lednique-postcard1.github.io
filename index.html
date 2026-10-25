@@ -41,13 +41,17 @@
 
 *,*::before,*::after{ box-sizing:border-box; }
 
-html,body{ height:100%; }
+html{
+  min-height:100%;
+  background:#ffffff;
+}
 
 body{
   margin:0;
   min-height:100vh;
   min-height:100dvh;
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:hidden;
   font-family:var(--font);
   font-weight:700;
   color:var(--ink);
@@ -56,6 +60,19 @@ body{
   -webkit-font-smoothing:antialiased;
   touch-action:manipulation;
   transition:background-color 900ms ease;
+}
+body.is-open{ overflow-y:auto; }
+body.is-closing{ overflow-y:hidden; }
+
+/* Первый экран остаётся самостоятельной сценой, а детали открытки
+   располагаются ниже него и появляются при обычной прокрутке. */
+.card-stage{
+  position:relative;
+  z-index:0;
+  width:100%;
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
 }
 
 
@@ -77,7 +94,7 @@ body{
 /* ---------------- сцена с ящиком ---------------- */
 
 .scene{
-  position:fixed;
+  position:absolute;
   inset:0;
   pointer-events:none;
   z-index:3;
@@ -128,14 +145,15 @@ body{
 /* ---------------- холст с открыткой ---------------- */
 
 .card-canvas{
-  position:fixed;
+  position:absolute;
   inset:0;
   width:100%;
   height:100%;
   display:block;
   z-index:2;
   outline:none;
-  touch-action:none;
+  /* Горизонтальный жест переворачивает открытку, вертикальный — скроллит. */
+  touch-action:pan-y;
   cursor:default;
 }
 body.is-open .card-canvas{ cursor:grab; }
@@ -145,7 +163,7 @@ body.is-open .card-canvas:active{ cursor:grabbing; }
 /* ---------------- подсказка ---------------- */
 
 .hint{
-  position:fixed;
+  position:absolute;
   left:50%;
   bottom:calc(env(safe-area-inset-bottom, 0px) + clamp(64px, 9vh, 104px));
   margin:0;
@@ -176,7 +194,7 @@ body.is-open .hint{
 /* ---------------- поле ввода ---------------- */
 
 .panel{
-  position:fixed;
+  position:absolute;
   left:0;
   right:0;
   bottom:0;
@@ -296,7 +314,7 @@ body.is-error .field__row{
 /* ---------------- «назад» ---------------- */
 
 .back{
-  position:fixed;
+  position:absolute;
   left:50%;
   bottom:calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 2.6vh, 28px));
   transform:translate(-50%, 12px);
@@ -322,6 +340,94 @@ body.is-open .back{
 }
 .back:hover{ color:var(--wine); }
 
+/* ---------------- текст приглашения и календарь ---------------- */
+
+.event-details{
+  display:none;
+  position:relative;
+  z-index:10;
+  min-height:100vh;
+  min-height:100dvh;
+  padding:clamp(56px, 9vh, 104px) 24px calc(env(safe-area-inset-bottom, 0px) + clamp(48px, 8vh, 88px));
+  background:#ffffff;
+}
+body.is-open .event-details{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.event-details__inner{
+  width:min(100%, 570px);
+}
+
+.event-details__title{
+  margin:0 0 clamp(24px, 4vh, 40px);
+  font-size:clamp(11px, 1.6vh, 14px);
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:rgba(92,18,38,.58);
+}
+
+.event-details__list{
+  margin:0;
+  font-size:clamp(15px, 2.1vh, 19px);
+  line-height:1.55;
+}
+.event-details__row{
+  display:grid;
+  grid-template-columns:minmax(92px, .75fr) 1.25fr;
+  gap:18px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(92,18,38,.12);
+}
+.event-details__row:first-child{ padding-top:0; }
+.event-details__row dt{ color:rgba(74,53,39,.58); }
+.event-details__row dd{ margin:0; color:var(--ink); }
+
+.calendar-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+  width:min(100%, 360px);
+  min-height:52px;
+  margin:clamp(30px, 5vh, 48px) auto 0;
+  padding:13px 22px;
+  border:1px solid rgba(92,18,38,.55);
+  border-radius:0;
+  background:transparent;
+  font-family:var(--font);
+  font-weight:700;
+  font-size:clamp(12px, 1.7vh, 15px);
+  letter-spacing:.06em;
+  color:var(--wine);
+  cursor:pointer;
+  transition:background-color 220ms ease, color 220ms ease, transform 220ms ease;
+}
+.calendar-button:hover,
+.calendar-button:focus-visible{
+  background:var(--wine);
+  color:#ffffff;
+}
+.calendar-button:active{ transform:scale(.98); }
+.calendar-button:focus-visible{ outline:2px solid rgba(92,18,38,.28); outline-offset:4px; }
+.calendar-button svg{ flex:0 0 auto; }
+
+.calendar-status{
+  min-height:1.5em;
+  margin:14px auto 0;
+  text-align:center;
+  font-size:11px;
+  line-height:1.5;
+  color:rgba(74,53,39,.62);
+}
+
+@media (max-width:420px){
+  .event-details{ padding-right:20px; padding-left:20px; }
+  .event-details__row{ grid-template-columns:86px 1fr; gap:14px; }
+}
+
 /* ---------------- старт ---------------- */
 
 .preload .scene,
@@ -339,7 +445,7 @@ body.is-open .back{
 /* ---------------- резервный рендер (без WebGL) ---------------- */
 
 .fb{
-  position:fixed;
+  position:absolute;
   left:0;
   top:0;
   z-index:2;
@@ -373,9 +479,10 @@ body.is-open .back{
 </head>
 <body class="preload">
 
-  <!-- открытка: полноэкранный canvas, поэтому её не обрезает по краям -->
+  <div class="card-stage" id="cardStage">
+  <!-- открытка: canvas на весь первый экран, поэтому её не обрезает по краям -->
   <canvas id="cardCanvas" class="card-canvas" tabindex="0"
-          aria-label="Открытка: потяните, чтобы перевернуть"></canvas>
+          aria-label="Открытка: потяните по горизонтали, чтобы перевернуть; прокрутите вниз, чтобы прочитать детали"></canvas>
 
   <!-- резервный вариант, если WebGL недоступен -->
   <div class="fb" id="cardFallback" hidden aria-hidden="true">
@@ -419,6 +526,49 @@ body.is-open .back{
   </div>
 
   <button class="back" id="back" type="button">← назад к ящику</button>
+  </div><!-- /card-stage -->
+
+  <!-- Текст дублирует оборот открытки и доступен при прокрутке на любом экране. -->
+  <section class="event-details" id="eventDetails" aria-labelledby="eventDetailsTitle">
+    <div class="event-details__inner">
+      <h2 class="event-details__title" id="eventDetailsTitle">детали приглашения</h2>
+      <dl class="event-details__list">
+        <div class="event-details__row">
+          <dt>Дата</dt>
+          <dd><time datetime="2026-10-31">31.10.2026</time></dd>
+        </div>
+        <div class="event-details__row">
+          <dt>Место</dt>
+          <dd>40 лет Победы, 130-85</dd>
+        </div>
+        <div class="event-details__row">
+          <dt>Событие</dt>
+          <dd>it's my birthday!</dd>
+        </div>
+        <div class="event-details__row">
+          <dt>Дресс-код</dt>
+          <dd>как тебе угодно ♡</dd>
+        </div>
+        <div class="event-details__row">
+          <dt>Pantone</dt>
+          <dd>pink yarrow, cannoli cream</dd>
+        </div>
+        <div class="event-details__row">
+          <dt>Time</dt>
+          <dd><time datetime="2026-10-31T18:30">18:30</time></dd>
+        </div>
+      </dl>
+      <button class="calendar-button" id="calendarButton" type="button">
+        <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+          <path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"
+                fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m9 14 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>добавить в календарь</span>
+      </button>
+      <p class="calendar-status" id="calendarStatus" role="status" aria-live="polite"></p>
+    </div>
+  </section>
 
 <script>
 /* ============================================================
@@ -493,6 +643,9 @@ window.CELLS = {
     tilt: 0,            // наклон вверх-вниз, градусы
     tiltTarget: 0,
 
+    zoom: 1,            // мобильное увеличение оборотной стороны
+    zoomTarget: 1,
+
     dragging: false,
     hintDone: false
   };
@@ -500,7 +653,8 @@ window.CELLS = {
   const G = { cx: 0, cy: 0, w: 100 };   // геометрия карточки на экране
 
   let startX = 0, startY = 0, prevX = 0, prevT = 0, baseAngle = 0, moved = 0, pxVel = 0;
-  let openTimer = 0, errorTimer = 0;
+  let openTimer = 0, errorTimer = 0, backZoomTimer = 0;
+  const activeTouchPoints = new Set();
 
   /* ------------------------------------------------------------
      WebGL
@@ -742,6 +896,9 @@ window.CELLS = {
       ? { cx: L.idleCx, cy: L.idleCy, w: L.idleW }
       : geometryAt(S.t);
 
+    /* Масштабируем саму геометрию, поэтому WebGL и CSS-фолбэк
+       увеличиваются одинаково и сохраняют общий центр. */
+    g.w *= S.zoom;
     G.cx = g.cx; G.cy = g.cy; G.w = g.w;
 
     if (fbMode) { drawFallback(g); return; }
@@ -865,6 +1022,14 @@ window.CELLS = {
       S.tilt = S.tiltTarget;
     }
 
+    /* Плавное увеличение запускается отдельным таймером после отпускания. */
+    if (Math.abs(S.zoomTarget - S.zoom) > 0.001) {
+      S.zoom += (S.zoomTarget - S.zoom) * 0.12;
+      moving = true;
+    } else {
+      S.zoom = S.zoomTarget;
+    }
+
     draw();
     if (moving) rafId = requestAnimationFrame(loop);
   }
@@ -878,6 +1043,9 @@ window.CELLS = {
 
     S.angle = 0; S.angleVel = 0; S.angleTarget = 0; S.dragTarget = 0;
     S.tilt = 0; S.tiltTarget = 0;
+    clearBackZoomTimer();
+    S.zoom = 1; S.zoomTarget = 1;
+    window.scrollTo(0, 0);
 
     body.classList.remove('is-closing', 'is-error');
     body.classList.add('is-open');
@@ -893,6 +1061,9 @@ window.CELLS = {
   function closeCard() {
     if (!S.open) return;
     S.open = false;
+    clearBackZoomTimer();
+    S.zoom = 1; S.zoomTarget = 1;
+    window.scrollTo(0, 0);
     body.classList.add('is-closing');
     body.classList.remove('is-open');
 
@@ -907,6 +1078,7 @@ window.CELLS = {
       S.t = 0;
       S.angle = 0; S.angleVel = 0; S.angleTarget = 0; S.dragTarget = 0;
       S.tilt = 0; S.tiltTarget = 0;
+      S.zoom = 1; S.zoomTarget = 1;
       input.value = '';
       body.classList.remove('is-error');
       S.hintDone = false;
@@ -972,6 +1144,58 @@ window.CELLS = {
   /* ------------------------------------------------------------
      вращение: только по Y
      ------------------------------------------------------------ */
+  function mobileBackZoomEnabled() {
+    return window.innerWidth <= 600 ||
+      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  }
+
+  function isBackSide(angle) {
+    return Math.abs(Math.round(angle / 180) % 2) === 1;
+  }
+
+  function clearBackZoomTimer() {
+    window.clearTimeout(backZoomTimer);
+    backZoomTimer = 0;
+  }
+
+  function resetBackZoom() {
+    clearBackZoomTimer();
+    S.zoomTarget = 1;
+    kick();
+  }
+
+  function scheduleBackZoom() {
+    clearBackZoomTimer();
+    if (!mobileBackZoomEnabled() || S.phase !== 'open' || S.dragging ||
+        activeTouchPoints.size || !isBackSide(S.angleTarget) || window.scrollY > 4) return;
+
+    /* Ровно секунда без касания; новое касание отменяет этот таймер. */
+    backZoomTimer = window.setTimeout(function () {
+      backZoomTimer = 0;
+      if (!mobileBackZoomEnabled() || S.phase !== 'open' || S.dragging ||
+          activeTouchPoints.size || !isBackSide(S.angleTarget) || window.scrollY > 4) return;
+      S.zoomTarget = 2;
+      kick();
+    }, 1000);
+  }
+
+  /* Учитываем именно касания экрана, а не только перемещение карточки. */
+  window.addEventListener('pointerdown', function (e) {
+    if (e.pointerType === 'mouse') return;
+    activeTouchPoints.add(e.pointerId);
+    if (S.open) resetBackZoom();
+  }, true);
+
+  function releaseTouchPoint(e) {
+    if (e.pointerType === 'mouse') return;
+    activeTouchPoints.delete(e.pointerId);
+    if (!activeTouchPoints.size && S.open && !S.dragging) {
+      window.setTimeout(scheduleBackZoom, 0);
+    }
+  }
+  window.addEventListener('pointerup', releaseTouchPoint, true);
+  window.addEventListener('pointercancel', releaseTouchPoint, true);
+
   function hintOff() {
     if (S.hintDone) return;
     S.hintDone = true;
@@ -985,7 +1209,8 @@ window.CELLS = {
   }
 
   function hitCard(x, y) {
-    return Math.abs(x - G.cx) <= G.w / 2 && Math.abs(y - G.cy) <= (G.w * AR) / 2;
+    const canvasTop = canvas.getBoundingClientRect().top;
+    return Math.abs(x - G.cx) <= G.w / 2 && Math.abs(y - canvasTop - G.cy) <= (G.w * AR) / 2;
   }
 
   window.addEventListener('pointerdown', function (e) {
@@ -995,6 +1220,7 @@ window.CELLS = {
     if (!inSafeZone(e.clientX, e.clientY)) return;
     if (!hitCard(e.clientX, e.clientY)) return;
 
+    resetBackZoom();
     S.dragging = true;
     moved = 0; pxVel = 0;
     startX = prevX = e.clientX;
@@ -1041,6 +1267,7 @@ window.CELLS = {
     }
     S.tiltTarget = 0;   // наклон всегда возвращается
     kick();
+    scheduleBackZoom();
   }
 
   window.addEventListener('pointerup', endDrag);
@@ -1061,6 +1288,7 @@ window.CELLS = {
   let rt = 0;
   window.addEventListener('resize', function () {
     clearTimeout(rt);
+    if (!mobileBackZoomEnabled()) resetBackZoom();
     rt = setTimeout(function () { measure(); kick(); }, 100);
   });
   window.addEventListener('orientationchange', function () {
@@ -1124,6 +1352,62 @@ window.CELLS = {
   window.__card = { S: S, L: L, G: G, draw: draw, kick: kick, measure: measure, useFallback: useFallback };
 })();
 
+</script>
+<script>
+/* Универсальный .ics-файл: открывается календарём на телефоне и компьютере. */
+(function () {
+  'use strict';
+
+  const button = document.getElementById('calendarButton');
+  const status = document.getElementById('calendarStatus');
+  if (!button) return;
+
+  function utcStamp(date) {
+    return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+  }
+
+  function buildCalendar() {
+    /* Без часового пояса: 18:30 останется локальным временем у гостя. */
+    return [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Lednique//Postcard//RU',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      'UID:birthday-20261031T183000@lednique-postcard1.github.io',
+      'DTSTAMP:' + utcStamp(new Date()),
+      'DTSTART:20261031T183000',
+      'SUMMARY:День рождение',
+      'LOCATION:40 лет Победы\\, 130-85',
+      "DESCRIPTION:it's my birthday!",
+      'STATUS:CONFIRMED',
+      'TRANSP:OPAQUE',
+      'END:VEVENT',
+      'END:VCALENDAR',
+      ''
+    ].join('\r\n');
+  }
+
+  button.addEventListener('click', function () {
+    try {
+      const file = new Blob([buildCalendar()], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'den-rozhdenie-31-10-2026.ics';
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(function () { URL.revokeObjectURL(url); }, 30000);
+      if (status) status.textContent = 'откройте скачанный файл, чтобы добавить событие';
+    } catch (error) {
+      if (status) status.textContent = 'не удалось создать файл календаря — попробуйте ещё раз';
+      console.error('Календарь:', error);
+    }
+  });
+})();
 </script>
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a501d68f5b3f8ec7',t:'MTc5MjkzNzc3Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
