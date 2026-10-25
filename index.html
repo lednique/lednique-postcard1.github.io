@@ -44,6 +44,11 @@
 html{
   min-height:100%;
   background:#ffffff;
+  scroll-behavior:smooth;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
 }
 
 body{
@@ -340,6 +345,56 @@ body.is-open .back{
 }
 .back:hover{ color:var(--wine); }
 
+/* ---------------- переход к деталям приглашения ---------------- */
+
+.details-link{
+  position:absolute;
+  left:50%;
+  bottom:calc(env(safe-area-inset-bottom, 0px) + clamp(58px, 8vh, 76px));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  transform:translate(-50%, 8px);
+  padding:0 12px;
+  border:0;
+  background:transparent;
+  color:rgba(92,18,38,.64);
+  font:inherit;
+  text-decoration:none;
+  z-index:8;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity 320ms ease, transform 380ms var(--ease-out), color 220ms ease, visibility 0s linear 380ms;
+}
+body.is-open .details-link{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(-50%, 0);
+  transition-delay:1350ms, 1350ms, 0s, 0s;
+}
+.details-link:hover,
+.details-link:focus-visible{ color:var(--wine); }
+.details-link:focus-visible{ outline:2px solid rgba(92,18,38,.24); outline-offset:5px; }
+.details-link__icon{
+  display:grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  border:1px solid currentColor;
+  border-radius:50%;
+  transition:transform 220ms ease, background-color 220ms ease;
+}
+.details-link:hover .details-link__icon{ transform:translateY(3px); background:rgba(92,18,38,.05); }
+.details-link__label{
+  font-size:clamp(9px, 1.3vh, 11px);
+  letter-spacing:.13em;
+  text-transform:lowercase;
+  white-space:nowrap;
+}
+
 /* ---------------- текст приглашения и календарь ---------------- */
 
 .event-details{
@@ -526,6 +581,15 @@ body.is-open .event-details{
   </div>
 
   <button class="back" id="back" type="button">← назад к ящику</button>
+  <a class="details-link" href="#eventDetails" aria-label="Прокрутить к деталям приглашения">
+    <span class="details-link__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="21" height="21" focusable="false">
+        <path d="M12 4v15m-6-6 6 6 6-6" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="details-link__label">детали приглашения</span>
+  </a>
   </div><!-- /card-stage -->
 
   <!-- Текст дублирует оборот открытки и доступен при прокрутке на любом экране. -->
@@ -1216,7 +1280,7 @@ window.CELLS = {
   window.addEventListener('pointerdown', function (e) {
     if (S.phase !== 'open') return;
     if (e.pointerType === 'mouse' && e.button !== 0) return;
-    if (e.target && e.target.closest && e.target.closest('input, button, .panel, .field')) return;
+    if (e.target && e.target.closest && e.target.closest('input, button, a, .panel, .field')) return;
     if (!inSafeZone(e.clientX, e.clientY)) return;
     if (!hitCard(e.clientX, e.clientY)) return;
 
