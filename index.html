@@ -170,20 +170,24 @@ body.is-open .card-canvas:active{ cursor:grabbing; }
 .hint{
   position:absolute;
   left:50%;
-  bottom:calc(env(safe-area-inset-bottom, 0px) + clamp(64px, 9vh, 104px));
+  /* Стоит под самой открыткой: --card-bottom считается в JS по геометрии
+     карточки, зазор до текста — ровно 20 px. На низких экранах страхуемся,
+     чтобы подсказка не уехала за нижний край сцены. */
+  top:min(calc(var(--card-bottom, 89vh) + 20px),
+         calc(100% - env(safe-area-inset-bottom, 0px) - 56px));
   margin:0;
   transform:translateX(-50%) translateY(6px);
   font-size:clamp(11px, 1.55vh, 13px);
   letter-spacing:.2em;
   text-transform:lowercase;
-  color:rgba(92,18,38,.45);
+  color:rgba(92,18,38,.28);
   opacity:0;
   pointer-events:none;
   transition:opacity 480ms ease, transform 520ms var(--ease-out);
   z-index:5;
 }
 body.is-open .hint{
-  opacity:1;
+  opacity:.8;
   transform:translateX(-50%);
   transition-delay:1400ms;
 }
@@ -685,6 +689,7 @@ window.CELLS = {
   const CELLS   = window.CELLS || {};
 
   const AR        = 1078 / 1460;   // высота / ширина открытки
+  const CARD_BOTTOM = (1049 - 1078 / 2) / 1078; // видимый низ текстуры (прозрачные поля ~29 px снизу)
   const THICK     = 0.005;         // расстояние между плоскостями (доля ширины)
   const OPEN_MS   = 1650;
   const CLOSE_MS  = 1000;
@@ -920,6 +925,13 @@ window.CELLS = {
 
     L.yOut = L.downCy - L.idleCy;
     sizeCanvas();
+
+    /* Подсказка «потяни» живёт под открыткой, а не у нижнего края экрана:
+       запоминаем низ видимой карточки, CSS добавляет к нему 20 px. */
+    if (hintEl) {
+      const cardBottom = L.fullCy + L.fullW * AR * CARD_BOTTOM;
+      hintEl.style.setProperty('--card-bottom', cardBottom.toFixed(1) + 'px');
+    }
   }
 
   const easeInOut = function (p) {
