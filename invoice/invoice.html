@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Invoice INV-2026-001 — Moonton Philippines Technology Inc / Viktor Vlasov</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  html, body { margin: 0; padding: 0; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8.8pt;
+    line-height: 1.30;
+    color: #24303d;
+    background: #ffffff;
+  }
+  p { margin: 0 0 3pt 0; }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  .muted { color: #6b7887; }
+  .small { font-size: 7.8pt; }
+  .tiny { font-size: 7.2pt; }
+  .right { text-align: right; }
+  .center { text-align: center; }
+  .nowrap { white-space: nowrap; }
+
+  .header { width: 527pt; margin-bottom: 7pt; }
+  .header td { padding: 0; }
+  .wordmark { font-size: 26pt; font-weight: bold; letter-spacing: 3pt; color: #123c63; line-height: 1.02; }
+  .wordmark-sub { font-size: 8pt; color: #6b7887; letter-spacing: 0.5pt; margin-top: 2pt; }
+  .meta { width: 265pt; border: 0.6pt solid #d7dee7; background: #f5f8fb; }
+  .meta td { padding: 2.6pt 6pt; font-size: 8pt; border-bottom: 0.5pt solid #e4eaf1; }
+  .meta tr:last-child td { border-bottom: none; }
+  .meta .k { color: #6b7887; width: 122pt; }
+  .meta .v { font-weight: bold; color: #123c63; text-align: right; width: 143pt; }
+  .rule { height: 2.2pt; background: #123c63; margin: 0 0 8pt 0; }
+
+  .sec-title {
+    font-size: 7.6pt; font-weight: bold; letter-spacing: 1pt; color: #123c63;
+    text-transform: uppercase; margin: 0 0 3pt 0;
+  }
+  .parties { width: 527pt; }
+  .parties .col-left { width: 263pt; padding: 0 5pt 0 0; }
+  .parties .col-right { width: 264pt; padding: 0 0 0 5pt; }
+  .box { border: 0.6pt solid #d7dee7; background: #fafbfd; padding: 6pt 8pt; width: 100%; }
+  .box .name { font-size: 10pt; font-weight: bold; color: #123c63; margin-bottom: 2pt; }
+  .tag { font-size: 6.8pt; letter-spacing: 0.7pt; color: #6b7887; text-transform: uppercase; margin-bottom: 4pt; }
+
+  .items { width: 527pt; margin-top: 3pt; table-layout: fixed; }
+  .items th {
+    background: #123c63; color: #ffffff; font-size: 7.4pt; letter-spacing: 0.4pt;
+    text-transform: uppercase; padding: 4.5pt 5pt; border: 0.6pt solid #123c63; text-align: left;
+  }
+  .items td { border: 0.5pt solid #d7dee7; padding: 5pt 5pt; font-size: 8.2pt; }
+  .items .c-num { width: 20pt; }
+  .items .c-desc { width: 288pt; }
+  .items .c-date { width: 66pt; }
+  .items .c-qty { width: 25pt; }
+  .items .c-price { width: 63pt; }
+  .items .c-amount { width: 65pt; }
+  .item-name { font-weight: bold; color: #123c63; font-size: 8.8pt; }
+  .item-desc { margin-top: 2pt; color: #4e5b69; font-size: 7.8pt; line-height: 1.26; }
+  .item-ref { margin-top: 2pt; color: #8a95a2; font-size: 7.2pt; }
+
+  .totals-wrap { width: 527pt; margin-top: 6pt; }
+  .totals-wrap .col-left { width: 300pt; padding: 0 8pt 0 0; }
+  .totals-wrap .col-right { width: 227pt; padding: 0; }
+  .amount-words { border: 0.6pt solid #d7dee7; background: #f5f8fb; padding: 6pt 8pt; font-size: 8pt; width: 100%; }
+  .totals { width: 227pt; }
+  .totals td { padding: 3.2pt 6pt; font-size: 8.4pt; border-bottom: 0.5pt solid #e4eaf1; }
+  .totals .k { width: 129pt; }
+  .totals .v { width: 98pt; text-align: right; }
+  .totals .grand td { background: #123c63; color: #ffffff; font-weight: bold; font-size: 10pt; border: none; padding: 5.5pt 6pt; }
+
+  .pay { width: 527pt; border: 0.6pt solid #d7dee7; border-left: 3pt solid #123c63; padding: 5pt 8pt; background: #fafbfd; }
+  .pay td { padding: 1.2pt 0; font-size: 8.2pt; }
+  .pay .k { color: #6b7887; width: 132pt; }
+  .pay .v { font-weight: bold; color: #24303d; width: 380pt; }
+
+  .notes { margin: 0; padding-left: 12pt; font-size: 7.5pt; color: #4e5b69; }
+  .notes li { margin-bottom: 1.8pt; }
+
+  .signs { width: 527pt; margin-top: 9pt; font-size: 8pt; }
+  .signs .col-left { width: 263pt; padding: 0 8pt 0 0; }
+  .signs .col-right { width: 264pt; padding: 0 0 0 8pt; }
+  .sign-line { border-bottom: 0.6pt solid #8895a4; height: 21pt; }
+  .sign-label { color: #6b7887; font-size: 7.4pt; margin-top: 2pt; }
+
+  .footer { border-top: 0.6pt solid #d7dee7; margin-top: 8pt; padding-top: 4pt; font-size: 7pt; color: #8a95a2; }
+
+  @media screen { body { padding: 16pt; background: #eef1f5; } .page { width: 794px; max-width: 100%; margin: 0 auto; background: #fff; padding: 34pt; box-shadow: 0 2px 14px rgba(0,0,0,.12); } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ===================== HEADER ===================== -->
+<table class="header">
+  <tr>
+    <td style="width:262pt;">
+      <div class="wordmark">INVOICE</div>
+      <div class="wordmark-sub">Content Outsourcing Production · Final Products</div>
+      <p class="small muted" style="margin-top:7pt;">Framework Agreement on Content Outsourcing Production<br>dated 18 September 2026, as amended by Addendum dated 14 October 2026</p>
+    </td>
+    <td style="width:265pt;">
+      <table class="meta">
+        <tr><td class="k">Invoice No.</td><td class="v">INV-2026-001</td></tr>
+        <tr><td class="k">Invoice date</td><td class="v">26 October 2026</td></tr>
+        <tr><td class="k">Contract No.</td><td class="v">FA-2026-0918-VV</td></tr>
+        <tr><td class="k">Order No.</td><td class="v">1 (Exhibit A) + Addendum</td></tr>
+        <tr><td class="k">Payment terms</td><td class="v">Net 30 calendar days</td></tr>
+        <tr><td class="k">Due date</td><td class="v">25 November 2026</td></tr>
+        <tr><td class="k">Currency</td><td class="v">USD</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<div class="rule"></div>
+
+<!-- ===================== PARTIES ===================== -->
+<table class="parties">
+  <tr>
+    <td class="col-left">
+      <p class="sec-title">From / Provider</p>
+      <div class="box">
+        <div class="tag">Issued by</div>
+        <div class="name">Viktor Vlasov</div>
+        <p>Independent contractor (Creator) under the Framework Agreement</p>
+        <p>Izhevsk city, Ukhtomsky str. 89 kv 11, Russian Federation</p>
+        <p>E-mail: <b>lednique@gmail.com</b></p>
+        <p class="tiny muted">Provider tax ID: not applicable (individual contractor)</p>
+      </div>
+    </td>
+    <td class="col-right">
+      <p class="sec-title">Bill To / Company (Payer)</p>
+      <div class="box">
+        <div class="tag">Sender of money</div>
+        <div class="name">Moonton Philippines Technology Inc</div>
+        <p>23F The Curve Building, 32nd Street</p>
+        <p>Bonifacio Global City, Taguig City, Philippines</p>
+        <p>E-mail: <b>adminph@moonton.com</b></p>
+        <p>VAT Reg TIN No.: <b>602-837-083-000</b></p>
+        <p class="tiny muted">Agreement contact: Jessica Woo, jessicawoo@moonton.com</p>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<!-- ===================== LINE ITEMS ===================== -->
+<p class="sec-title" style="margin-top:8pt;">Deliverables / Services</p>
+<table class="items">
+  <thead>
+    <tr>
+      <th class="c-num center">#</th>
+      <th class="c-desc">Deliverable &amp; description</th>
+      <th class="c-date">Delivery date</th>
+      <th class="c-qty center">Qty</th>
+      <th class="c-price right">Unit price</th>
+      <th class="c-amount right">Amount (USD)</th>
+    </tr>
+  </thead>
+  <tbody>
+        <tr>
+      <td class="c-num center">1</td>
+      <td class="c-desc">
+        <div class="item-name">Layla TikTok Effect Filter</div>
+        <div class="item-desc">Development of the character's body tracking movement and basic material setup; adjusting materials; creation of interactive experience (right hand raise - light beam lighting effect with bloom); face animation rendering (individual closing of each eye, smile); Facial Expressions × 3.</div>
+        <div class="item-ref">Order No. 1, Exhibit A to the Framework Agreement, dated 18 September 2026</div>
+      </td>
+      <td class="c-date">26 Sep 2026</td>
+      <td class="c-qty center">1</td>
+      <td class="c-price right nowrap">1,500.00</td>
+      <td class="c-amount right nowrap"><b>1,500.00</b></td>
+    </tr>
+    <tr>
+      <td class="c-num center">2</td>
+      <td class="c-desc">
+        <div class="item-name">Layla TikTok Effect Filter - Chibi Version (Additional)</div>
+        <div class="item-desc">Body tracking; materials setup &amp; color correction; 3D model optimization, rigging, weight painting, blendshapes design &amp; facial animation setup on Effect; hair remodeling &amp; revision.</div>
+        <div class="item-ref">Additional deliverable under the Addendum to the Framework Agreement, dated 14 October 2026</div>
+      </td>
+      <td class="c-date">7 Oct 2026</td>
+      <td class="c-qty center">1</td>
+      <td class="c-price right nowrap">1,300.00</td>
+      <td class="c-amount right nowrap"><b>1,300.00</b></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ===================== TOTALS ===================== -->
+<table class="totals-wrap">
+  <tr>
+    <td class="col-left">
+      <div class="amount-words"><b>Amount in words:</b> Two Thousand Eight Hundred US Dollars Only.<br><span class="muted">Revised total talent fee per Section 3 of the Addendum: USD 1,500.00 original fee plus USD 1,300.00 additional fee.</span></div>
+    </td>
+    <td class="col-right">
+      <table class="totals">
+        <tr><td class="k">Subtotal</td><td class="v">USD 2,800.00</td></tr>
+        <tr><td class="k">VAT / taxes / duties (inclusive)</td><td class="v">USD 0.00</td></tr>
+        <tr><td class="k">Bank charges (inclusive)</td><td class="v">USD 0.00</td></tr>
+        <tr class="grand"><td class="k">TOTAL DUE</td><td class="v">USD 2,800.00</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- ===================== PAYMENT INSTRUCTIONS ===================== -->
+<p class="sec-title" style="margin-top:8pt;">Payment instructions / Beneficiary</p>
+<table class="pay">
+    <tr><td class="k">Beneficiary name</td><td class="v">Maksim Kuzlin</td></tr>
+  <tr><td class="k">Bank</td><td class="v">REVOLUT BANK UAB</td></tr>
+  <tr><td class="k">Account / IBAN</td><td class="v">FR76 2823 3000 0155 9947 9578 845</td></tr>
+  <tr><td class="k">SWIFT / BIC</td><td class="v">REVOFRP2</td></tr>
+  <tr><td class="k">Payment currency</td><td class="v">USD</td></tr>
+  <tr><td class="k">Payment reference</td><td class="v">INV-2026-001 / Contract FA-2026-0918-VV / Order No. 1</td></tr>
+</table>
+<p class="tiny muted" style="margin-top:3pt;">The beneficiary is the authorized payment recipient under the Authorization Letter dated 10 September 2026, executed by the Provider Viktor Vlasov and acknowledged by Maksim Kuzlin (Section 5.1 of the Framework Agreement). Please remit the full invoiced amount without deduction of any bank charges or withholding taxes.</p>
+
+<!-- ===================== NOTES ===================== -->
+<p class="sec-title" style="margin-top:7pt;">Notes and conditions</p>
+<ol class="notes">
+    <li>Payment is due within thirty (30) calendar days after the Company receives this invoice together with the balance statement signed or stamped by both parties (Section 5.2 of the Framework Agreement). The due date above assumes receipt on the invoice date.</li>
+  <li>Issued under the Framework Agreement dated 18 September 2026 (DocuSign Envelope ID ED397F4A-F586-8D4D-82CB-B69AAD04B804) and the Addendum dated 14 October 2026 (DocuSign Envelope ID 153B162F-9908-87B9-8095-8C651CE2B652), Order No. 1.</li>
+  <li>All prices include all bank charges, taxes, duties and/or withholding taxes; the Provider bears such charges (Section 5.3). No VAT is charged separately.</li>
+  <li>Balance due under the Agreement, Addendum and Order No. 1 as of 26 October 2026: USD 2,800.00. No previous payments have been deducted.</li>
+  <li>Deliverables are delivered and accepted per Section 4 (Delivery and Acceptance). Please quote the invoice, contract and order numbers in the payment reference and correspondence.</li>
+</ol>
+
+<!-- ===================== SIGNATURES ===================== -->
+<table class="signs">
+  <tr>
+    <td class="col-left">
+      <p style="margin-bottom:2pt;"><b>For and on behalf of the Provider</b></p>
+      <div class="sign-line">&nbsp;</div>
+      <div class="sign-label">Viktor Vlasov, Creator · Signature / Date</div>
+    </td>
+    <td class="col-right">
+      <p style="margin-bottom:2pt;"><b>Acknowledged by the Company (balance statement, sec. 5.2)</b></p>
+      <div class="sign-line">&nbsp;</div>
+      <div class="sign-label">Moonton Philippines Technology Inc · Signature / Stamp / Date</div>
+    </td>
+  </tr>
+</table>
+
+<!-- ===================== FOOTER ===================== -->
+<div class="footer">Invoice INV-2026-001 · 26 October 2026 · Correspondence: lednique@gmail.com (Provider) / adminph@moonton.com (Company). When signed by both parties, this document also serves as the balance statement referred to in Section 5.2 of the Framework Agreement.</div>
+
+</div>
+</body>
+</html>

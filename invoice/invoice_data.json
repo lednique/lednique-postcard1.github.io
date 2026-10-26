@@ -1,0 +1,78 @@
+{
+  "invoice_no": "INV-2026-001",
+  "invoice_date": "26 October 2026",
+  "contract_no": "FA-2026-0918-VV",
+  "order_no": "1 (Exhibit A) + Addendum",
+  "payment_terms": "Net 30 calendar days",
+  "due_date": "25 November 2026",
+  "currency": "USD",
+  "subtitle": "Content Outsourcing Production · Final Products",
+  "agreement_line1": "Framework Agreement on Content Outsourcing Production",
+  "agreement_line2": "dated 18 September 2026, as amended by Addendum dated 14 October 2026",
+
+  "provider": {
+    "name": "Viktor Vlasov",
+    "role": "Independent contractor (Creator) under the Framework Agreement",
+    "address": "Izhevsk city, Ukhtomsky str. 89 kv 11, Russian Federation",
+    "email": "lednique@gmail.com",
+    "tax_note": "Provider tax ID: not applicable (individual contractor)"
+  },
+  "company": {
+    "name": "Moonton Philippines Technology Inc",
+    "address1": "23F The Curve Building, 32nd Street",
+    "address2": "Bonifacio Global City, Taguig City, Philippines",
+    "email": "adminph@moonton.com",
+    "vat": "602-837-083-000",
+    "contact_note": "Agreement contact: Jessica Woo, jessicawoo@moonton.com"
+  },
+
+  "items": [
+    {
+      "no": "1",
+      "name": "Layla TikTok Effect Filter",
+      "desc": "Development of the character's body tracking movement and basic material setup; adjusting materials; creation of interactive experience (right hand raise - light beam lighting effect with bloom); face animation rendering (individual closing of each eye, smile); Facial Expressions × 3.",
+      "ref": "Order No. 1, Exhibit A to the Framework Agreement, dated 18 September 2026",
+      "date": "26 Sep 2026",
+      "qty": "1",
+      "unit_price": "1,500.00",
+      "amount": "1,500.00"
+    },
+    {
+      "no": "2",
+      "name": "Layla TikTok Effect Filter - Chibi Version (Additional)",
+      "desc": "Body tracking; materials setup & color correction; 3D model optimization, rigging, weight painting, blendshapes design & facial animation setup on Effect; hair remodeling & revision.",
+      "ref": "Additional deliverable under the Addendum to the Framework Agreement, dated 14 October 2026",
+      "date": "7 Oct 2026",
+      "qty": "1",
+      "unit_price": "1,300.00",
+      "amount": "1,300.00"
+    }
+  ],
+
+  "subtotal": "2,800.00",
+  "vat_taxes": "0.00",
+  "bank_charges": "0.00",
+  "total": "2,800.00",
+  "amount_in_words": "Two Thousand Eight Hundred US Dollars Only",
+  "total_note": "Revised total talent fee per Section 3 of the Addendum: USD 1,500.00 original fee plus USD 1,300.00 additional fee.",
+
+  "payment_rows": [
+    ["Beneficiary name", "Maksim Kuzlin"],
+    ["Bank", "REVOLUT BANK UAB"],
+    ["Account / IBAN", "FR76 2823 3000 0155 9947 9578 845"],
+    ["SWIFT / BIC", "REVOFRP2"],
+    ["Payment currency", "USD"],
+    ["Payment reference", "INV-2026-001 / Contract FA-2026-0918-VV / Order No. 1"]
+  ],
+  "payment_note": "The beneficiary is the authorized payment recipient under the Authorization Letter dated 10 September 2026, executed by the Provider Viktor Vlasov and acknowledged by Maksim Kuzlin (Section 5.1 of the Framework Agreement). Please remit the full invoiced amount without deduction of any bank charges or withholding taxes.",
+
+  "notes": [
+    "Payment is due within thirty (30) calendar days after the Company receives this invoice together with the balance statement signed or stamped by both parties (Section 5.2 of the Framework Agreement). The due date above assumes receipt on the invoice date.",
+    "Issued under the Framework Agreement dated 18 September 2026 (DocuSign Envelope ID ED397F4A-F586-8D4D-82CB-B69AAD04B804) and the Addendum dated 14 October 2026 (DocuSign Envelope ID 153B162F-9908-87B9-8095-8C651CE2B652), Order No. 1.",
+    "All prices include all bank charges, taxes, duties and/or withholding taxes; the Provider bears such charges (Section 5.3). No VAT is charged separately.",
+    "Balance due under the Agreement, Addendum and Order No. 1 as of 26 October 2026: USD 2,800.00. No previous payments have been deducted.",
+    "Deliverables are delivered and accepted per Section 4 (Delivery and Acceptance). Please quote the invoice, contract and order numbers in the payment reference and correspondence."
+  ],
+
+  "footer": "Correspondence: lednique@gmail.com (Provider) / adminph@moonton.com (Company). When signed by both parties, this document also serves as the balance statement referred to in Section 5.2 of the Framework Agreement."
+}
